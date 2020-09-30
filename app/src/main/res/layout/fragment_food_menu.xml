@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fragment_food_menu"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#151515"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/menu_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#000000"
-        app:navigationIcon="@drawable/ic_arrow_back" />
+        android:background="#000000">
+
+        <Button
+            android:id="@+id/btn_go_back"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@drawable/ic_arrow_back" />
+
+
+    </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_menu"
