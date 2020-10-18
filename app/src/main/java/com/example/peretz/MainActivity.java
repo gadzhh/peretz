@@ -1,13 +1,16 @@
 package com.example.peretz;
 
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.TextView;
+
 
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.peretz.Fragment.FoodMenuFragment;
-import com.example.peretz.Fragment.HomeFragment;
+import com.example.peretz.screens.home.HomeFragment;
 
 
 public class MainActivity extends FragmentActivity {
@@ -22,6 +25,5 @@ public class MainActivity extends FragmentActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container_for_fragments, homeFragment).addToBackStack(null);
         fragmentTransaction.commit();
-
     }
 }

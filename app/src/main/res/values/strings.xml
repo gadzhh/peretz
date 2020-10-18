@@ -4,4 +4,6 @@
     <string name="go_to_shopping">Перейти к покупкам</string>
     <string name="btn_plus">+</string>
     <string name="btn_minus">-</string>
+
+    <string name="price_text">%d ₽</string>
 </resources>

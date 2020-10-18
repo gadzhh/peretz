@@ -1,7 +1,7 @@
-package com.example.peretz;
-
+package com.example.peretz.data;
 
 import com.google.gson.annotations.SerializedName;
+
 
 public class Menu {
 
@@ -19,6 +19,16 @@ public class Menu {
 
     @SerializedName("image")
     private String image;
+
+    private int quantity;
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
     public int getId() {
         return id;

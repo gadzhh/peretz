@@ -1,4 +1,4 @@
-package com.example.peretz;
+package com.example.peretz.data;
 
 import android.app.Application;
 

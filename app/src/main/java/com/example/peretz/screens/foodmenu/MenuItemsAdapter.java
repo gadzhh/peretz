@@ -1,7 +1,5 @@
-package com.example.peretz;
+package com.example.peretz.screens.foodmenu;
 
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.peretz.R;
+import com.example.peretz.data.Menu;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -19,7 +19,12 @@ import java.util.ArrayList;
 
 public class MenuItemsAdapter extends RecyclerView.Adapter<MenuItemsAdapter.MenuItemsHolder> {
 
+    private OnButtonListener onButtonListener;
     private ArrayList<Menu> items = new ArrayList<>();
+
+    public MenuItemsAdapter(OnButtonListener Listener) {
+        onButtonListener = Listener;
+    }
 
     public void setData(ArrayList<Menu> data) {
 
@@ -33,9 +38,7 @@ public class MenuItemsAdapter extends RecyclerView.Adapter<MenuItemsAdapter.Menu
     @Override
     public MenuItemsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.food_list_item, parent, false);
-        return new MenuItemsHolder(view);
-
-
+        return new MenuItemsHolder(view, onButtonListener);
     }
 
     @Override
@@ -49,21 +52,19 @@ public class MenuItemsAdapter extends RecyclerView.Adapter<MenuItemsAdapter.Menu
     }
 
 
-    class MenuItemsHolder extends RecyclerView.ViewHolder {
+    public static class MenuItemsHolder extends RecyclerView.ViewHolder {
 
+        private OnButtonListener onButtonListener;
         private int quantity = 0;
-
         private ImageView imageViewDish;
-        private TextView dishName;
-        private TextView dishDescription;
-        private TextView dishPrice;
-        private TextView dishQuantity;
-        private Button btnMinus;
-        private Button btnPlus;
+        private TextView dishName, dishDescription, dishPrice, dishQuantity;
+        private Button btnMinus, btnPlus;
 
 
-        public MenuItemsHolder(@NonNull View itemView) {
+        public MenuItemsHolder(@NonNull View itemView, OnButtonListener listener) {
             super(itemView);
+
+            onButtonListener = listener;
 
             imageViewDish = itemView.findViewById(R.id.iv_dish);
             dishName = itemView.findViewById(R.id.tv_dish_name);
@@ -72,40 +73,10 @@ public class MenuItemsAdapter extends RecyclerView.Adapter<MenuItemsAdapter.Menu
             dishQuantity = itemView.findViewById(R.id.tv_dish_quantity);
             btnMinus = itemView.findViewById(R.id.btn_minus);
             btnPlus = itemView.findViewById(R.id.btn_plus);
-
-
-            btnMinus.setVisibility(View.INVISIBLE);
-            btnMinus.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    quantity = quantity - 1;
-                    changePrice(quantity);
-
-                    if (quantity == 0) {
-                        btnMinus.setVisibility(View.INVISIBLE);
-                        dishQuantity.setVisibility(View.INVISIBLE);
-                    }
-
-                }
-            });
-
-
-            btnPlus.setVisibility(View.VISIBLE);
-            btnPlus.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    btnMinus.setVisibility(View.VISIBLE);
-                    dishQuantity.setVisibility(View.VISIBLE);
-                    quantity = quantity + 1;
-                    changePrice(quantity);
-                }
-            });
-
-
         }
 
         private void changePrice(int number) {
-            dishQuantity.setText("" + number);
+            dishQuantity.setText(String.valueOf(number));
         }
 
         void bind(Menu item) {
@@ -117,8 +88,42 @@ public class MenuItemsAdapter extends RecyclerView.Adapter<MenuItemsAdapter.Menu
 
             dishName.setText(item.getName());
             dishDescription.setText(item.getDescription());
-            dishPrice.setText((item.getPrice()) + " ₽");
+            dishPrice.setText(itemView.getContext().getString(R.string.price_text, item.getPrice()));
+
+            quantity = item.getQuantity();
+
+            btnMinus.setVisibility(View.INVISIBLE);
+            btnMinus.setOnClickListener(view -> {
+                quantity = quantity - 1;
+                changePrice(quantity);
+
+                if (quantity == 0) {
+                    btnMinus.setVisibility(View.INVISIBLE);
+                    dishQuantity.setVisibility(View.INVISIBLE);
+                }
+
+                onButtonListener.onButtonClick(item.getId(), true);
+            });
+
+            btnPlus.setOnClickListener(view -> {
+                btnMinus.setVisibility(View.VISIBLE);
+                dishQuantity.setVisibility(View.VISIBLE);
+                quantity = quantity + 1;
+                changePrice(quantity);
+
+                onButtonListener.onButtonClick(item.getId(), false);
+
+            });
+
+            if (item.getQuantity() > 0) {
+                btnMinus.setVisibility(View.VISIBLE);
+                dishQuantity.setText(String.valueOf(item.getQuantity()));
+            } else if (item.getQuantity() == 0) {
+                btnMinus.setVisibility(View.INVISIBLE);
+                dishQuantity.setVisibility(View.INVISIBLE);
+            }
         }
     }
-
 }
+
+

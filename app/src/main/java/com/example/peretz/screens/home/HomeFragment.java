@@ -1,4 +1,4 @@
-package com.example.peretz.Fragment;
+package com.example.peretz.screens.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.peretz.screens.foodmenu.FoodMenuFragment;
 import com.example.peretz.R;
 
 
@@ -33,7 +34,6 @@ public class HomeFragment extends Fragment {
     private void initViews(View view) {
 
         goToShoppingButton = view.findViewById(R.id.btn_go_to_shopping);
-
         goToShoppingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
