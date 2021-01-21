@@ -1,10 +1,7 @@
 package com.example.peretz;
 
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.widget.TextView;
-
 
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;

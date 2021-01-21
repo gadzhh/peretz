@@ -1,25 +1,25 @@
-package com.example.peretz.data;
+package com.example.peretz;
 
-import android.app.Application;
+import com.example.peretz.data.FoodApi;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class NetworkFoodApi extends Application {
+public class App {
     private static final String BASE_URL = "https://peretz-group.ru/api/v2/";
-    private static NetworkFoodApi networkFoodApi;
+    private static App networkFoodApi;
     private Retrofit retrofit;
 
-    private NetworkFoodApi() {
+    private App() {
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }
 
-    public static NetworkFoodApi getNetworkFoodApi() {
+    public static App getNetworkFoodApi() {
         if (networkFoodApi == null) {
-            networkFoodApi = new NetworkFoodApi();
+            networkFoodApi = new App();
         }
         return networkFoodApi;
     }

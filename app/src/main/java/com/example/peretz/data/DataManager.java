@@ -1,5 +1,7 @@
 package com.example.peretz.data;
 
+import com.example.peretz.App;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +15,7 @@ public class DataManager {
 
         ArrayList<Menu> menu = new ArrayList<>();
 
-        NetworkFoodApi.getNetworkFoodApi().getJSONApi().getData(
+        App.getNetworkFoodApi().getJSONApi().getData(
                 "93",
                 "47be9031474183ea92958d5e255d888e47bdad44afd5d7b7201d0eb572be5278"
         ).
